@@ -28,14 +28,14 @@ import lombok.NoArgsConstructor;
 @Table(name = "store_owner")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StoreOwner extends BaseEntity {
-    private static final String ERR_MSG_PHONE_NUMBER_IS_EMPTY = "휴대전화번호가 비어있습니다.";
-    private static final String ERR_MSG_PASSWORD_IS_EMPTY = "비밀번호가 비어있습니다.";
+    private static final String ERROR_MESSAGE_PHONE_NUMBER_IS_EMPTY = "휴대전화번호가 비어있습니다.";
+    private static final String ERROR_MESSAGE_PASSWORD_IS_EMPTY = "비밀번호가 비어있습니다.";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "phone_number", length = 20, nullable = false)
+    @Column(name = "phone_number", length = 20, nullable = false, unique = true)
     private String phoneNumber;
 
     @Column(name = "password", length = 255, nullable = false)
@@ -53,10 +53,10 @@ public class StoreOwner extends BaseEntity {
 
     private void validate(String phoneNumber, String password) {
         if (!StringUtils.hasText(phoneNumber)) {
-            throw new IllegalArgumentException(ERR_MSG_PHONE_NUMBER_IS_EMPTY);
+            throw new IllegalArgumentException(ERROR_MESSAGE_PHONE_NUMBER_IS_EMPTY);
         }
         if (!StringUtils.hasText(password)) {
-            throw new IllegalArgumentException(ERR_MSG_PASSWORD_IS_EMPTY);
+            throw new IllegalArgumentException(ERROR_MESSAGE_PASSWORD_IS_EMPTY);
         }
     }
 

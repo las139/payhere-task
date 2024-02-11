@@ -32,10 +32,10 @@ import lombok.NoArgsConstructor;
 @Table(name = "product")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product extends BaseEntity {
-    private static final String ERR_MSG_CATEGORY_IS_EMPTY = "카테고리가 비어있습니다.";
-    private static final String ERR_MSG_NAME_IS_EMPTY = "상품명이 비어있습니다.";
-    private static final String ERR_MSG_DESCRIPTION_IS_EMPTY = "설명이 비어있습니다.";
-    private static final String ERR_MSG_EXPIRATION_DATE_IS_EMPTY = "유통기한이 비어있습니다.";
+    private static final String ERROR_MESSAGE_CATEGORY_IS_EMPTY = "카테고리가 비어있습니다.";
+    private static final String ERROR_MESSAGE_NAME_IS_EMPTY = "상품명이 비어있습니다.";
+    private static final String ERROR_MESSAGE_DESCRIPTION_IS_EMPTY = "설명이 비어있습니다.";
+    private static final String ERROR_MESSAGE_EXPIRATION_DATE_IS_EMPTY = "유통기한이 비어있습니다.";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,6 +55,9 @@ public class Product extends BaseEntity {
 
     @Column(name = "description", columnDefinition = "TEXT", nullable = false)
     private String description;
+
+    @Column(name = "barcode", length = 255, nullable = false, unique = true)
+    private String barcode;
 
     @Column(name = "expiration_date", nullable = false)
     private LocalDateTime expirationDate;
@@ -83,16 +86,16 @@ public class Product extends BaseEntity {
 
     private void validate(String category, String name, String description, LocalDateTime expirationDate) {
         if (!StringUtils.hasText(category)) {
-            throw new IllegalArgumentException(ERR_MSG_CATEGORY_IS_EMPTY);
+            throw new IllegalArgumentException(ERROR_MESSAGE_CATEGORY_IS_EMPTY);
         }
         if (!StringUtils.hasText(name)) {
-            throw new IllegalArgumentException(ERR_MSG_NAME_IS_EMPTY);
+            throw new IllegalArgumentException(ERROR_MESSAGE_NAME_IS_EMPTY);
         }
         if (!StringUtils.hasText(description)) {
-            throw new IllegalArgumentException(ERR_MSG_DESCRIPTION_IS_EMPTY);
+            throw new IllegalArgumentException(ERROR_MESSAGE_DESCRIPTION_IS_EMPTY);
         }
         if (Objects.isNull(expirationDate)) {
-            throw new IllegalArgumentException(ERR_MSG_EXPIRATION_DATE_IS_EMPTY);
+            throw new IllegalArgumentException(ERROR_MESSAGE_EXPIRATION_DATE_IS_EMPTY);
         }
     }
 

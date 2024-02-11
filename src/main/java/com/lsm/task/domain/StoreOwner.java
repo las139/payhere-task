@@ -6,8 +6,10 @@ import java.util.regex.Pattern;
 
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.StringUtils;
+
+import com.lsm.task.exception.AuthorizationException;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -68,6 +70,13 @@ public class StoreOwner extends BaseEntity {
 
         if (!StringUtils.hasText(password)) {
             throw new IllegalArgumentException(ERROR_MESSAGE_PASSWORD_IS_EMPTY);
+        }
+    }
+
+    public void checkPassword(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        if (!passwordEncoder.matches(password, this.password)) {
+            throw new AuthorizationException(ERROR_MESSAGE_PASSWORD_NOT_MATCHED);
         }
     }
 

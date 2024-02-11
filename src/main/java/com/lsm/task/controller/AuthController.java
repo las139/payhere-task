@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lsm.task.dto.ApiResponse;
 import com.lsm.task.dto.SignUpRequest;
+import com.lsm.task.dto.LoginRequest;
 import com.lsm.task.service.AuthService;
 
 import jakarta.validation.Valid;
@@ -21,5 +22,10 @@ public class AuthController {
     public ResponseEntity<ApiResponse> singup(@Valid @RequestBody SignUpRequest request) {
         authService.signup(request);
         return ResponseEntity.ok().body(ApiResponse.ofSuccessResponse(null));
+    }
+
+    @PostMapping("/api/auth/login")
+    public ResponseEntity<ApiResponse> login(@Valid @RequestBody LoginRequest request) {
+        return ResponseEntity.ok().body(ApiResponse.ofSuccessResponse(authService.login(request)));
     }
 }

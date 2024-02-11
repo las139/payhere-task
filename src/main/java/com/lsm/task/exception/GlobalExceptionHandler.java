@@ -21,6 +21,13 @@ public class GlobalExceptionHandler {
         return ApiResponse.ofErrorResponse(httpStatus.value(), exception.getMessage(), null);
     }
 
+    @ExceptionHandler(AuthorizationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ApiResponse handleAuthorizationException(HttpServletRequest request, AuthorizationException exception) {
+        final HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
+        return ApiResponse.ofErrorResponse(httpStatus.value(), exception.getMessage(), null);
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiResponse handleException(HttpServletRequest request, Exception exception) throws IOException {

@@ -86,18 +86,18 @@
 ***
 
 ## 용어 사전
-| 한글명     | 영문명               | 설명                                   |
-|------------|----------------------|----------------------------------------|
-| 사용자     | user                 | 상품을 관리할 수 있는 유저(사장)       |
-| 상품       | product              | 메뉴 묶음, 분류                        |
-| 카테고리   | category             | 상품의 구분                            |
-| 가격       | price                | 상품의 판매가격                        |
-| 원가       | cost                 | 상품의 원가                            |
-| 상품명     | name                 | 상품의 이름                            |
-| 설명       | description          | 상품에 대한 설명                       |
-| 바코드     | barcode              | 상품의 바코드 번호                     |
-| 유통기한   | menu expiration_date | 상품의 유통기한                        |
-| 사이즈     | size                 | 상품의 크기 ( SMALL or LARGE)          |
+| 한글명     | 영문명             | 설명                                   |
+|------------|--------------------|----------------------------------------|
+| 사장       | storeOwner         | 상품을 관리할 수 있는 유저(사장)       |
+| 상품       | product            | 메뉴 묶음, 분류                        |
+| 카테고리   | category           | 상품의 구분                            |
+| 가격       | price              | 상품의 판매가격                        |
+| 원가       | cost               | 상품의 원가                            |
+| 상품명     | name               | 상품의 이름                            |
+| 설명       | description        | 상품에 대한 설명                       |
+| 바코드     | barcode            | 상품의 바코드 번호                     |
+| 유통기한   | expirationDate     | 상품의 유통기한                        |
+| 사이즈     | size               | 상품의 크기 ( SMALL or LARGE)          |
 
 ***
 
@@ -114,17 +114,17 @@
 ## ERD
 - 상품의 변경 기록은 hibernate 의 envers 를 사용하여 관리하기로 하며, 해당되는 테이블은 ERD 에 별도로 추가하지 않음
 - [ERD 링크](https://www.erdcloud.com/d/HDy9sdhqg43ffgwX4)
-![](ERD.png)
+![](src/main/resources/image/ERD.png)
 
 ## Flow Chart
-![](FlowChart.png)
+![](src/main/resources/image/FlowChart.png)
 
 ***
 
 ## 📈 To-Do
 - [x] 테이블 설계 & DDL, ERD 작성
 - [x] 플로우 차트 작성
-- [ ] 엔티티 연관관계 맵핑
+- [x] 엔티티 연관관계 맵핑
 - [ ] 회원가입 기능 구현
     + 휴대폰번호 유효성 체크
     + 비밀번호 암호화

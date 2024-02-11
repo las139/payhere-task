@@ -116,11 +116,14 @@
 - [ERD 링크](https://www.erdcloud.com/d/HDy9sdhqg43ffgwX4)
 ![](ERD.png)
 
+## Flow Chart
+![](FlowChart.png)
+
 ***
 
 ## 📈 To-Do
 - [x] 테이블 설계 & DDL, ERD 작성
-- [ ] 플로우 차트 작성
+- [x] 플로우 차트 작성
 - [ ] 엔티티 연관관계 맵핑
 - [ ] 회원가입 기능 구현
     + 휴대폰번호 유효성 체크

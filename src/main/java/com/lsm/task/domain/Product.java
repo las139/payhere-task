@@ -1,7 +1,9 @@
 package com.lsm.task.domain;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import org.hibernate.envers.AuditTable;
@@ -34,7 +36,7 @@ import lombok.NoArgsConstructor;
 public class Product extends BaseEntity {
     private static final String ERROR_MESSAGE_CATEGORY_IS_EMPTY = "카테고리가 비어있습니다.";
     private static final String ERROR_MESSAGE_NAME_IS_EMPTY = "상품명이 비어있습니다.";
-    private static final String ERROR_MESSAGE_DESCRIPTION_IS_EMPTY = "설명이 비어있습니다.";
+    private static final String ERROR_MESSAGE_BARCODE_IS_EMPTY = "바코드가 비어있습니다.";
     private static final String ERROR_MESSAGE_EXPIRATION_DATE_IS_EMPTY = "유통기한이 비어있습니다.";
 
     @Id
@@ -60,7 +62,7 @@ public class Product extends BaseEntity {
     private String barcode;
 
     @Column(name = "expiration_date", nullable = false)
-    private LocalDateTime expirationDate;
+    private LocalDate expirationDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "size", length = 10, nullable = false)
@@ -71,30 +73,31 @@ public class Product extends BaseEntity {
     private StoreOwner storeOwner;
 
     @Builder
-    public Product(String category, BigDecimal price, BigDecimal cost, String name, String description, LocalDateTime expirationDate,
+    public Product(String category, BigDecimal price, BigDecimal cost, String name, String description, String barcode, String expirationDate,
                    String size, StoreOwner storeOwner) {
-        validate(category, name, description, expirationDate);
+        validate(category, name, barcode, expirationDate);
         this.category = category;
         this.price = new Price(price);
         this.cost = new Cost(cost);
         this.name = name;
         this.description = description;
-        this.expirationDate = expirationDate;
+        this.barcode = barcode;
+        this.expirationDate = LocalDate.parse(expirationDate, DateTimeFormatter.ISO_LOCAL_DATE);
         this.size = Size.getSizeByStr(size);
         this.storeOwner = storeOwner;
     }
 
-    private void validate(String category, String name, String description, LocalDateTime expirationDate) {
+    private void validate(String category, String name, String barcode, String expirationDate) {
         if (!StringUtils.hasText(category)) {
             throw new IllegalArgumentException(ERROR_MESSAGE_CATEGORY_IS_EMPTY);
         }
         if (!StringUtils.hasText(name)) {
             throw new IllegalArgumentException(ERROR_MESSAGE_NAME_IS_EMPTY);
         }
-        if (!StringUtils.hasText(description)) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_DESCRIPTION_IS_EMPTY);
+        if (!StringUtils.hasText(barcode)) {
+            throw new IllegalArgumentException(ERROR_MESSAGE_BARCODE_IS_EMPTY);
         }
-        if (Objects.isNull(expirationDate)) {
+        if (!StringUtils.hasText(expirationDate)) {
             throw new IllegalArgumentException(ERROR_MESSAGE_EXPIRATION_DATE_IS_EMPTY);
         }
     }

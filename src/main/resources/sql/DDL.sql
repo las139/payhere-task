@@ -4,7 +4,7 @@ CREATE TABLE store_owner (
     password VARCHAR(255) NOT NULL,
     create_date DATETIME NOT NULL,
     update_date DATETIME
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE product (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -20,4 +20,4 @@ CREATE TABLE product (
     create_date DATETIME NOT NULL,
     update_date DATETIME,
     FOREIGN KEY (owner_id) REFERENCES store_owner(id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

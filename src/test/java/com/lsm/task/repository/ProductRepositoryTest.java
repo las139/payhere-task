@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +35,7 @@ class ProductRepositoryTest {
                          .cost(BigDecimal.valueOf(5_000))
                          .name("BBQ 후라이드치킨")
                          .description("BBQ 에서 출시한 후라이드 치킨입니다.")
-                         .expirationDate(LocalDateTime.now())
+                         .expirationDate("2024-07-12")
                          .size(Size.LARGE.name())
                          .storeOwner(storeOwner)
                          .build();

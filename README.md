@@ -111,8 +111,15 @@
 
 ***
 
+## ERD
+- 상품의 변경 기록은 hibernate 의 envers 를 사용하여 관리하기로 하며, 해당되는 테이블은 ERD 에 별도로 추가하지 않음
+- [ERD 링크](https://www.erdcloud.com/d/HDy9sdhqg43ffgwX4)
+![](ERD.png)
+
+***
+
 ## 📈 To-Do
-- [ ] 테이블 설계 & DDL, ERD 작성
+- [x] 테이블 설계 & DDL, ERD 작성
 - [ ] 플로우 차트 작성
 - [ ] 엔티티 연관관계 맵핑
 - [ ] 회원가입 기능 구현

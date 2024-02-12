@@ -10,8 +10,10 @@ import com.lsm.task.domain.StoreOwner;
 import com.lsm.task.dto.LoginRequest;
 import com.lsm.task.dto.SignUpRequest;
 import com.lsm.task.dto.TokenResponse;
+import com.lsm.task.exception.AuthorizationException;
 import com.lsm.task.exception.NoSearchStoreOwnerException;
 import com.lsm.task.infrastructure.JwtTokenProvider;
+import com.lsm.task.domain.LoginMember;
 import com.lsm.task.repository.StoreOwnerRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -53,5 +55,16 @@ public class AuthService {
 
         String token = jwtTokenProvider.generateToken(storeOwner.getPhoneNumber());
         return new TokenResponse(token);
+    }
+
+    @Transactional(readOnly = true)
+    public LoginMember findStoreOwnerByToken(String credentials) {
+        if (!jwtTokenProvider.validateToken(credentials)) {
+            throw new AuthorizationException(ERROR_MESSAGE_INVALID_TOKEN);
+        }
+
+        String phoneNumber = jwtTokenProvider.getPayload(credentials);
+        StoreOwner storeOwner = storeOwnerRepository.findByPhoneNumber(phoneNumber).orElseThrow(NoSearchStoreOwnerException::new);
+        return new LoginMember(storeOwner.getId(), storeOwner.getPhoneNumber());
     }
 }

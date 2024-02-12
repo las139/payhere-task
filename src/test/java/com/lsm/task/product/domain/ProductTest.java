@@ -84,7 +84,7 @@ class ProductTest {
     @DisplayName("정상적인 정보 입력 시 상품이 생성된다.")
     void validate_success() {
         // given
-        StoreOwner storeOwner = new StoreOwner("01044447777", "asdkjqwp1290-u091");
+        StoreOwner storeOwner = new StoreOwner("010-4444-7777", "asdkjqwp1290-u091");
 
         // when
         Product product = Product.builder()
@@ -93,6 +93,7 @@ class ProductTest {
                                  .cost(BigDecimal.valueOf(5_000))
                                  .name("BBQ 후라이드치킨")
                                  .description("BBQ 에서 출시한 후라이드 치킨입니다.")
+                                 .barcode("12394091325190")
                                  .expirationDate("2024-07-12")
                                  .size(Size.LARGE.name())
                                  .storeOwner(storeOwner)

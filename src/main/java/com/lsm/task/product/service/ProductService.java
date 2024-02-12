@@ -1,5 +1,9 @@
 package com.lsm.task.product.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +25,12 @@ public class ProductService {
     private static final String ERROR_MESSAGE_DELETE_NOT_OWNER = "상품을 등록한 사장님만 삭제 가능합니다.";
 
     private final ProductRepository productRepository;
+
+    public Page<Product> getProductsByCursor(Long ownerId, Long cursorId, int pageSize) {
+        Pageable pageable = PageRequest.of(0, pageSize, Sort.by(Sort.Direction.DESC, "id"));
+        long cursor = (cursorId == null ? Long.MAX_VALUE : cursorId);
+        return productRepository.findByStoreOwnerAndCursor(ownerId, cursor, pageable);
+    }
 
     public void register(StoreOwner storeOwner, RegisterProductRequest request) {
         Product product = Product.builder()

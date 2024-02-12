@@ -137,7 +137,7 @@ class ProductServiceTest {
 
     @Test
     @DisplayName("상품을 등록한 사장님이 아닐 경우 수정 실패한다.")
-    void updateProductFailDueToDifferentOwner() {
+    void update_product_fail_now_owner() {
         // given
         StoreOwner anotherOwner = StoreOwner.builder().id(2L).phoneNumber("010-9999-8888").password("password").build();
 
@@ -162,5 +162,36 @@ class ProductServiceTest {
 
         // then
         assertEquals("상품을 등록한 사장님만 수정 가능합니다.", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("상품 삭제 성공")
+    void delete_product_success() {
+        // given
+        when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
+
+        // when
+        productService.delete(storeOwner, 1L);
+
+        // then
+        verify(productRepository).delete(product);
+    }
+
+    @Test
+    @DisplayName("상품을 등록한 사장님이 아닐 경우 삭제 실패한다.")
+    void delete_product_fail_now_owner() {
+        // given
+        StoreOwner anotherOwner = StoreOwner.builder().id(2L).phoneNumber("010-9999-8888").password("password").build();
+
+        // when
+        when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
+
+        // then
+        Exception exception = assertThrows(AuthorizationException.class, () -> {
+            productService.delete(anotherOwner, 1L);
+        });
+
+        // then
+        assertEquals("상품을 등록한 사장님만 삭제 가능합니다.", exception.getMessage());
     }
 }

@@ -17,7 +17,8 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class ProductService {
-    private static final String ERROR_MESSAGE_NOT_OWNER = "상품을 등록한 사장님만 수정 가능합니다.";
+    private static final String ERROR_MESSAGE_UPDATE_NOT_OWNER = "상품을 등록한 사장님만 수정 가능합니다.";
+    private static final String ERROR_MESSAGE_DELETE_NOT_OWNER = "상품을 등록한 사장님만 삭제 가능합니다.";
 
     private final ProductRepository productRepository;
 
@@ -43,11 +44,21 @@ public class ProductService {
 
         // 상품을 등록한 사장님만 수정 가능
         if (!product.isOwner(storeOwner)) {
-            throw new AuthorizationException(ERROR_MESSAGE_NOT_OWNER);
+            throw new AuthorizationException(ERROR_MESSAGE_UPDATE_NOT_OWNER);
         }
 
         product.update(request);
 
         productRepository.save(product);
+    }
+
+    public void delete(StoreOwner storeOwner, Long productId) {
+        Product product = productRepository.findById(productId).orElseThrow(NoSearchProductException::new);
+
+        if (!product.isOwner(storeOwner)) {
+            throw new AuthorizationException(ERROR_MESSAGE_DELETE_NOT_OWNER);
+        }
+
+        productRepository.delete(product);
     }
 }

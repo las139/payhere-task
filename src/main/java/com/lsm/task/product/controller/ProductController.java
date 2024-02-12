@@ -1,6 +1,7 @@
 package com.lsm.task.product.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +37,13 @@ public class ProductController {
     public ResponseEntity<ApiResponse> updateProduct(@AuthenticationPrincipal LoginMember loginMember, @PathVariable Long productId, @RequestBody UpdateProductRequest request) {
         StoreOwner storeOwner = storeOwnerService.findStoreOwnerById(loginMember.getId());
         productService.update(storeOwner, productId, request);
+        return ResponseEntity.ok().body(ApiResponse.ofSuccessResponse(null));
+    }
+
+    @DeleteMapping("/api/products/{productId}")
+    public ResponseEntity<ApiResponse> deleteProduct(@AuthenticationPrincipal LoginMember loginMember, @PathVariable Long productId) {
+        StoreOwner storeOwner = storeOwnerService.findStoreOwnerById(loginMember.getId());
+        productService.delete(storeOwner, productId);
         return ResponseEntity.ok().body(ApiResponse.ofSuccessResponse(null));
     }
 }

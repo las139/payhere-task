@@ -9,14 +9,18 @@ import com.lsm.task.common.dto.ApiResponse;
 import com.lsm.task.storeowner.dto.SignUpRequest;
 import com.lsm.task.storeowner.service.StoreOwnerService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
+@Tag(name = "StoreOwner", description = "사장 API Document")
 public class StoreOwnerController {
     private final StoreOwnerService storeOwnerService;
 
+    @Operation(summary = "회원가입", description = "사장님이 회원가입을 한다.")
     @PostMapping("/api/auth/signup")
     public ResponseEntity<ApiResponse> singup(@Valid @RequestBody SignUpRequest request) {
         storeOwnerService.signup(request);

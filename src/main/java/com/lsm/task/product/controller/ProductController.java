@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lsm.task.auth.domain.LoginMember;
 import com.lsm.task.product.domain.Product;
 import com.lsm.task.product.dto.UpdateProductRequest;
+import com.lsm.task.product.exception.NoSearchProductException;
 import com.lsm.task.storeowner.domain.StoreOwner;
 import com.lsm.task.common.dto.ApiResponse;
 import com.lsm.task.product.dto.RegisterProductRequest;
@@ -36,6 +37,16 @@ public class ProductController {
                                                    @RequestParam(value = "size", defaultValue = "10") int size) {
         Page<Product> results = productService.getProductsByCursor(loginMember.getId(), cursor, size);
         return ResponseEntity.ok().body(ApiResponse.ofSuccessResponse(results));
+    }
+
+    @GetMapping("/api/products/{productId}")
+    public ResponseEntity<ApiResponse> getProductDetails(@AuthenticationPrincipal LoginMember loginMember, @PathVariable Long productId) {
+        StoreOwner storeOwner = storeOwnerService.findStoreOwnerById(loginMember.getId());
+        Product product = productService.getProductDetails(storeOwner, productId);
+        if (product == null) {
+            throw new NoSearchProductException();
+        }
+        return ResponseEntity.ok().body(ApiResponse.ofSuccessResponse(product));
     }
 
     @PostMapping("/api/product")

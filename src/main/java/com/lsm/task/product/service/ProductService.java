@@ -32,6 +32,10 @@ public class ProductService {
         return productRepository.findByStoreOwnerAndCursor(ownerId, cursor, pageable);
     }
 
+    public Product getProductDetails(StoreOwner storeOwner, Long productId) {
+        return productRepository.findByStoreOwnerAndId(storeOwner, productId);
+    }
+
     public void register(StoreOwner storeOwner, RegisterProductRequest request) {
         Product product = Product.builder()
                                  .category(request.getCategory())

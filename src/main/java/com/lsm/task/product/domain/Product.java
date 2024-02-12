@@ -3,6 +3,7 @@ package com.lsm.task.product.domain;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.envers.AuditTable;
@@ -11,22 +12,26 @@ import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.lsm.task.common.domain.BaseEntity;
 import com.lsm.task.product.dto.UpdateProductRequest;
 import com.lsm.task.storeowner.domain.StoreOwner;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -79,6 +84,10 @@ public class Product extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "fk_product_to_user"))
     private StoreOwner storeOwner;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<ProductNameInitial> nameInitials;
 
     @Builder
     public Product(Long id, String category, BigDecimal price, BigDecimal cost, String name, String description, String barcode,

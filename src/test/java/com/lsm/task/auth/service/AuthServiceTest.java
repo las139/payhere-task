@@ -50,8 +50,8 @@ class AuthServiceTest {
                                    .build();
     }
 
-    @DisplayName("로그인이 성공한다.")
     @Test
+    @DisplayName("로그인이 성공한다.")
     void login_success() {
         // given
         when(storeOwnerRepository.findByPhoneNumber(anyString())).thenReturn(Optional.of(mockStoreOwner));
@@ -65,8 +65,8 @@ class AuthServiceTest {
         assertEquals("token", tokenResponse.getAccessToken());
     }
 
-    @DisplayName("존재하지 않는 유저의 휴대전화번호를 입력하면 로그인 실패한다.")
     @Test
+    @DisplayName("존재하지 않는 유저의 휴대전화번호를 입력하면 로그인 실패한다.")
     void login_fail_store_owner_not_found() {
         when(storeOwnerRepository.findByPhoneNumber(PHONE_NUMBER)).thenReturn(Optional.empty());
 
@@ -75,8 +75,8 @@ class AuthServiceTest {
         assertThrows(NoSearchStoreOwnerException.class, () -> authService.login(request));
     }
 
-    @DisplayName("잘못된 비밀번호를 입력하면 로그인 실패한다.")
     @Test
+    @DisplayName("잘못된 비밀번호를 입력하면 로그인 실패한다.")
     void login_fail_incorrect_password() {
         // given
         when(storeOwnerRepository.findByPhoneNumber(anyString())).thenReturn(Optional.of(mockStoreOwner));

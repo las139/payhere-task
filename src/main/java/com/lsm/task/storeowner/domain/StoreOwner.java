@@ -9,6 +9,7 @@ import org.hibernate.envers.Audited;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.StringUtils;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.lsm.task.common.domain.BaseEntity;
 import com.lsm.task.auth.exception.AuthorizationException;
 import com.lsm.task.product.domain.Product;
@@ -49,6 +50,7 @@ public class StoreOwner extends BaseEntity {
     @Column(name = "password", length = 255, nullable = false)
     private String password;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "storeOwner", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Product> products;
 

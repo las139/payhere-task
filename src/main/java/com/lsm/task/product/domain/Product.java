@@ -9,6 +9,7 @@ import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 import org.springframework.util.StringUtils;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.lsm.task.common.domain.BaseEntity;
@@ -73,6 +74,7 @@ public class Product extends BaseEntity {
     @Column(name = "size", length = 10, nullable = false)
     private Size size;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "fk_product_to_user"))
     private StoreOwner storeOwner;

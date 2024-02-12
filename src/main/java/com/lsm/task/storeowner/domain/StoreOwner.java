@@ -54,9 +54,16 @@ public class StoreOwner extends BaseEntity {
     @OneToMany(mappedBy = "storeOwner", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Product> products;
 
-    @Builder
     public StoreOwner(String phoneNumber, String password) {
         validate(phoneNumber, password);
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+    }
+
+    @Builder
+    public StoreOwner(Long id, String phoneNumber, String password) {
+        validate(phoneNumber, password);
+        this.id = id;
         this.phoneNumber = phoneNumber;
         this.password = password;
     }

@@ -28,7 +28,6 @@ public class AuthenticationPrincipalArgumentResolver implements HandlerMethodArg
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest,
                                   WebDataBinderFactory binderFactory) {
         String credentials = AuthorizationExtractor.extract(Objects.requireNonNull(webRequest.getNativeRequest(HttpServletRequest.class)));
-        System.out.println("##### resolveArgument - credentials:"+credentials);
         if (credentials == null) {
             return GuestMember.getInstance();
         }

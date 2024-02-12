@@ -35,10 +35,10 @@ class StoreOwnerTest {
     @DisplayName("휴대전화번호, 비밀번호가 정상적인 데이터일 경우 유저가 정상적으로 생성된다.")
     void validate_success() {
         // when
-        StoreOwner storeOwner = new StoreOwner("01044447777", "asdkjqwp1290-u091");
+        StoreOwner storeOwner = new StoreOwner("010-4444-7777", "asdkjqwp1290-u091");
 
         assertAll(
-            () -> assertThat(storeOwner.getPhoneNumber()).isEqualTo("01044447777"),
+            () -> assertThat(storeOwner.getPhoneNumber()).isEqualTo("010-4444-7777"),
             () -> assertThat(storeOwner.getPassword()).isEqualTo("asdkjqwp1290-u091")
         );
     }

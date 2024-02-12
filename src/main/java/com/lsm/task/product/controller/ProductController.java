@@ -1,11 +1,14 @@
 package com.lsm.task.product.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lsm.task.auth.domain.LoginMember;
+import com.lsm.task.product.dto.UpdateProductRequest;
 import com.lsm.task.storeowner.domain.StoreOwner;
 import com.lsm.task.common.dto.ApiResponse;
 import com.lsm.task.product.dto.RegisterProductRequest;
@@ -26,6 +29,13 @@ public class ProductController {
     public ResponseEntity<ApiResponse> registerProduct(@AuthenticationPrincipal LoginMember loginMember, @Valid @RequestBody RegisterProductRequest request) {
         StoreOwner storeOwner = storeOwnerService.findStoreOwnerById(loginMember.getId());
         productService.register(storeOwner, request);
+        return ResponseEntity.ok().body(ApiResponse.ofSuccessResponse(null));
+    }
+
+    @PatchMapping("/api/products/{productId}")
+    public ResponseEntity<ApiResponse> updateProduct(@AuthenticationPrincipal LoginMember loginMember, @PathVariable Long productId, @RequestBody UpdateProductRequest request) {
+        StoreOwner storeOwner = storeOwnerService.findStoreOwnerById(loginMember.getId());
+        productService.update(storeOwner, productId, request);
         return ResponseEntity.ok().body(ApiResponse.ofSuccessResponse(null));
     }
 }

@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.lsm.task.common.domain.BaseEntity;
+import com.lsm.task.product.dto.UpdateProductRequest;
 import com.lsm.task.storeowner.domain.StoreOwner;
 
 import jakarta.persistence.Column;
@@ -80,8 +81,8 @@ public class Product extends BaseEntity {
     private StoreOwner storeOwner;
 
     @Builder
-    public Product(String category, BigDecimal price, BigDecimal cost, String name, String description, String barcode, String expirationDate,
-                   String size, StoreOwner storeOwner) {
+    public Product(Long id, String category, BigDecimal price, BigDecimal cost, String name, String description, String barcode,
+                   String expirationDate, String size, StoreOwner storeOwner) {
         validate(category, name, barcode, expirationDate);
         this.category = category;
         this.price = new Price(price);
@@ -106,6 +107,37 @@ public class Product extends BaseEntity {
         }
         if (!StringUtils.hasText(expirationDate)) {
             throw new IllegalArgumentException(ERROR_MESSAGE_EXPIRATION_DATE_IS_EMPTY);
+        }
+    }
+
+    public boolean isOwner(StoreOwner storeOwner) {
+        return this.storeOwner.equals(storeOwner);
+    }
+
+    public void update(UpdateProductRequest request) {
+        if (request.getCategory() != null) {
+            this.category = request.getCategory();
+        }
+        if (request.getPrice() != null) {
+            this.price = new Price(request.getPrice());
+        }
+        if (request.getCost() != null) {
+            this.cost = new Cost(request.getCost());
+        }
+        if (request.getName() != null) {
+            this.name = request.getName();
+        }
+        if (request.getDescription() != null) {
+            this.description = request.getDescription();
+        }
+        if (request.getBarcode() != null) {
+            this.barcode = request.getBarcode();
+        }
+        if (request.getExpirationDate() != null) {
+            this.expirationDate = LocalDate.parse(request.getExpirationDate());
+        }
+        if (request.getSize() != null) {
+            this.size = Size.getSizeByStr(request.getSize());
         }
     }
 

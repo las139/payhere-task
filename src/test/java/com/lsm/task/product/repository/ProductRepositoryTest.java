@@ -35,6 +35,7 @@ class ProductRepositoryTest {
                          .cost(BigDecimal.valueOf(5_000))
                          .name("BBQ 후라이드치킨")
                          .description("BBQ 에서 출시한 후라이드 치킨입니다.")
+                         .barcode("219049012490210120")
                          .expirationDate("2024-07-12")
                          .size(Size.LARGE.name())
                          .storeOwner(storeOwner)

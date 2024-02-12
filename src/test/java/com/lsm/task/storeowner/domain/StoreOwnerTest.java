@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.lsm.task.storeowner.domain.StoreOwner;
-
 class StoreOwnerTest {
     @Test
     @DisplayName("휴대전화번호가 비어있는 경우 유저 생성 시 Exception 이 발생한다.")

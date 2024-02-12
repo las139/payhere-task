@@ -1,14 +1,10 @@
 package com.lsm.task.auth.service;
 
-import java.util.Objects;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lsm.task.storeowner.domain.StoreOwner;
 import com.lsm.task.auth.dto.LoginRequest;
-import com.lsm.task.storeowner.dto.SignUpRequest;
 import com.lsm.task.auth.dto.TokenResponse;
 import com.lsm.task.auth.exception.AuthorizationException;
 import com.lsm.task.storeowner.exception.NoSearchStoreOwnerException;

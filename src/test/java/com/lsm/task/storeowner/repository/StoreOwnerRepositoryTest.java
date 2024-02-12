@@ -13,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.lsm.task.storeowner.domain.StoreOwner;
-import com.lsm.task.storeowner.repository.StoreOwnerRepository;
 
 @DataJpaTest
 @ActiveProfiles("test")

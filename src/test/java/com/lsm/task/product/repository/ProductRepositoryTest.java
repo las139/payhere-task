@@ -16,7 +16,6 @@ import org.springframework.test.context.ActiveProfiles;
 import com.lsm.task.product.domain.Product;
 import com.lsm.task.product.domain.Size;
 import com.lsm.task.storeowner.domain.StoreOwner;
-import com.lsm.task.product.repository.ProductRepository;
 
 @DataJpaTest
 @ActiveProfiles("test")

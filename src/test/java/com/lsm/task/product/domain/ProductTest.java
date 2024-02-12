@@ -5,13 +5,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.lsm.task.product.domain.Product;
-import com.lsm.task.product.domain.Size;
 import com.lsm.task.storeowner.domain.StoreOwner;
 
 class ProductTest {
@@ -96,7 +93,7 @@ class ProductTest {
                                  .cost(BigDecimal.valueOf(5_000))
                                  .name("BBQ 후라이드치킨")
                                  .description("BBQ 에서 출시한 후라이드 치킨입니다.")
-                                 .expirationDate(LocalDateTime.now())
+                                 .expirationDate("2024-07-12")
                                  .size(Size.LARGE.name())
                                  .storeOwner(storeOwner)
                                  .build();

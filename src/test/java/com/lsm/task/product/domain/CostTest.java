@@ -8,8 +8,6 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.lsm.task.product.domain.Cost;
-
 class CostTest {
     @Test
     @DisplayName("가격이 비어있거나 0원 미만일 경우 Exception 이 발생한다.")

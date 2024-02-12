@@ -34,8 +34,9 @@ public class ProductController {
     @GetMapping("/api/products")
     public ResponseEntity<ApiResponse> getProducts(@AuthenticationPrincipal LoginMember loginMember,
                                                    @RequestParam(value = "cursor", required = false) Long cursor,
-                                                   @RequestParam(value = "size", defaultValue = "10") int size) {
-        Page<Product> results = productService.getProductsByCursor(loginMember.getId(), cursor, size);
+                                                   @RequestParam(value = "size", defaultValue = "10") int size,
+                                                   @RequestParam(value = "searchKey") String searchKey) {
+        Page<Product> results = productService.getProductsByCursor(loginMember.getId(), cursor, size, searchKey);
         return ResponseEntity.ok().body(ApiResponse.ofSuccessResponse(results));
     }
 

@@ -1,5 +1,8 @@
 package com.lsm.task.product.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -9,8 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lsm.task.auth.exception.AuthorizationException;
 import com.lsm.task.product.domain.Product;
+import com.lsm.task.product.domain.ProductNameInitial;
 import com.lsm.task.product.dto.UpdateProductRequest;
 import com.lsm.task.product.exception.NoSearchProductException;
+import com.lsm.task.product.repository.ProductNameInitialRepository;
+import com.lsm.task.product.utils.ExtractInitialUtils;
 import com.lsm.task.storeowner.domain.StoreOwner;
 import com.lsm.task.product.dto.RegisterProductRequest;
 import com.lsm.task.product.repository.ProductRepository;
@@ -26,10 +32,13 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public Page<Product> getProductsByCursor(Long ownerId, Long cursorId, int pageSize) {
+    private final ProductNameInitialRepository nameInitialRepository;
+
+    public Page<Product> getProductsByCursor(Long ownerId, Long cursorId, int pageSize, String searchKey) {
         Pageable pageable = PageRequest.of(0, pageSize, Sort.by(Sort.Direction.DESC, "id"));
         long cursor = (cursorId == null ? Long.MAX_VALUE : cursorId);
-        return productRepository.findByStoreOwnerAndCursor(ownerId, cursor, pageable);
+        String searchInitial = ExtractInitialUtils.extractWord(searchKey);
+        return productRepository.findByStoreOwnerAndCursor(ownerId, searchKey, searchInitial, cursor, pageable);
     }
 
     public Product getProductDetails(StoreOwner storeOwner, Long productId) {
@@ -51,6 +60,19 @@ public class ProductService {
                                  .build();
 
         productRepository.save(product);
+
+        // 상품명 초성 단어로 분리하여 저장
+        List<Map<String, String>> initials = ExtractInitialUtils.extractInitial(request.getName());
+        for (Map<String, String> map : initials) {
+            ProductNameInitial productNameInitial = ProductNameInitial.builder()
+                                                                      .seq(initials.indexOf(map) + 1)
+                                                                      .word(map.get("word"))
+                                                                      .initial(map.get("initial"))
+                                                                      .product(product)
+                                                                      .build();
+
+            nameInitialRepository.save(productNameInitial);
+        }
     }
 
     public void update(StoreOwner storeOwner, Long productId, UpdateProductRequest request) {

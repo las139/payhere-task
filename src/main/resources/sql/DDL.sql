@@ -21,3 +21,14 @@ CREATE TABLE product (
     update_date DATETIME,
     FOREIGN KEY (owner_id) REFERENCES store_owner(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE product_name_initial (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    seq INT(10) NOT NULL,
+    word VARCHAR(50) NOT NULL,
+    initial VARCHAR(50) NOT NULL,
+    product_id BIGINT NOT NULL,
+    create_date DATETIME NOT NULL,
+    update_date DATETIME,
+    FOREIGN KEY (product_id) REFERENCES product(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

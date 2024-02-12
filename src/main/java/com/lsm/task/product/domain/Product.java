@@ -84,6 +84,7 @@ public class Product extends BaseEntity {
     public Product(Long id, String category, BigDecimal price, BigDecimal cost, String name, String description, String barcode,
                    String expirationDate, String size, StoreOwner storeOwner) {
         validate(category, name, barcode, expirationDate);
+        this.id = id;
         this.category = category;
         this.price = new Price(price);
         this.cost = new Cost(cost);

@@ -26,6 +26,7 @@ import com.lsm.task.product.domain.Product;
 import com.lsm.task.product.domain.Size;
 import com.lsm.task.product.dto.RegisterProductRequest;
 import com.lsm.task.product.dto.UpdateProductRequest;
+import com.lsm.task.product.repository.ProductNameInitialRepository;
 import com.lsm.task.product.repository.ProductRepository;
 import com.lsm.task.storeowner.domain.StoreOwner;
 import com.lsm.task.storeowner.repository.StoreOwnerRepository;
@@ -33,6 +34,8 @@ import com.lsm.task.storeowner.repository.StoreOwnerRepository;
 class ProductServiceTest {
     @Mock
     private ProductRepository productRepository;
+    @Mock
+    private ProductNameInitialRepository nameInitialRepository;
 
     @Mock
     private StoreOwnerRepository storeOwnerRepository;
